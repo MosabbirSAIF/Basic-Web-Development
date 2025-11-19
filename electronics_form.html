@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Electronic Products</title>
+  <style>
+    body{font-family:Arial, sans-serif; background-color: rgb(2, 0, 29); margin:0; padding:20px}
+    h1{color:#111827}
+    form{background:#fff; padding:20px; border-radius:8px; max-width:600px; margin:auto; box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+    label{display:block; margin-top:12px; font-weight:600}
+    input, select{width:100%; padding:10px; margin-top:4px; border:1px solid #ccc; border-radius:6px; font-size:14px; box-sizing:border-box; background:#fff;  color:#111827;}
+    select{appearance:none; -webkit-appearance:none; -moz-appearance:none; background:#fff; background-size:16px; padding-right:34px; cursor:pointer;}
+    button{ margin-top:20px; padding:10px 14px; border:none; border-radius:6px; background:#111827; color:#fff; font-weight:600; cursor:pointer}
+    button:hover{ background:#374151}
+  </style>
+</head>
+<body>
+  <h1 style="color: #f6f8fb;">Add New Product</h1>
+  <form action="submit_electronics.php" method="post">
+    <label for="pname">Product Name</label>
+    <input type="text" id="pname" name="pname" required>
+    <label for="brand">Brand</label>
+    <input type="text" id="brand" name="brand" required>
+    <label for="price">Price</label>
+    <input type="text" id="price" name="price" required>
+    <label for="vaf">Voltage and Frequency</label>
+    <input type="text" id="vaf" name="vaf" required>
+    <label for="sm">Safety Marks</label>
+    <input type="text" id="sm" name="sm" required>
+    <label for="min">Made in</label>
+    <input type="text" id="min" name="min" required>
+    <label for="warranty">Warranty</label>
+    <input type="text" id="warranty" name="warranty">
+    <label for="stock">Stock Quantity</label>
+    <input type="number" id="stock" name="stock" min="0">
+    <button type="submit">Enter Product</button>
+  </form>
+</body>
+</html>

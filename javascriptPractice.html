@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Product Entry </title>
+  <style>
+    body{font-family:Arial, sans-serif; background-color: rgb(2, 0, 29); margin:0; padding:20px}
+    h1{color:#111827}
+    form{background:#fff; padding:20px; border-radius:8px; max-width:600px; margin:auto; box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+    label{display:block; margin-top:12px; font-weight:600}
+    input, select{width:100%; padding:10px; margin-top:4px; border:1px solid #ccc; border-radius:6px; font-size:14px; box-sizing:border-box; background:#fff;  color:#111827;}
+    select{appearance:none; -webkit-appearance:none; -moz-appearance:none; background:#fff; background-size:16px; padding-right:34px; cursor:pointer;}
+    button{ margin-top:20px; padding:10px 14px; border:none; border-radius:6px; background:#111827; color:#fff; font-weight:600; cursor:pointer}
+    button:hover{ background:#374151}
+  </style>
+  <script>
+    function myFunction() {
+      alert("You pressed a key inside the input field 0_0");
+    }
+    function myFunction2() {
+      document.getElementById("hehe").innerHTML = "You are the Stupid one in your class XD";
+    }
+    function myFunction3() {
+      document.getElementById("hehe").innerHTML = "I can guess who you are if u click me!";
+    }
+    function biggy(x){
+      x.style.height = "400px";
+      x.style.width = "500px";
+    }
+    function normalImg(x) {
+      x.style.height = "200px";
+      x.style.width = "250px";
+    } 
+  </script>
+</head>
+<body>
+  <h1 style="color: #f6f8fb;">JavaScript Practice</h1><br><br>
+  <p id="hehe" style="color: #f6f8fb;" >I can guess who you are if u click me!</p>
+  <button onclick="myFunction2()"> Click Me!</button><br><br>
+
+  <img onmouseover="biggy(this)" onmouseout="normalImg(this)" border="0" src="emo.png" alt="Smiley" width="250px" height="200px"><br><br>
+  <input type="text" onkeypress="myFunction()" onclick="myFunction3()">
+</body>
+</html>
