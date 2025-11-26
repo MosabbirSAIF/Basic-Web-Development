@@ -10,9 +10,19 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+function passEnc(string $password){
+    $len = strlen($password);
+    $enc = "";
+    for($i=0; $i<$len; $i++){
+        $enc .= chr(ord($password[$i]) ^ $len);
+    }
+    return sha1($enc);
+}
+
 if(isset($_POST['submit'])){ // Check if form is submitted checking the buttons name
     $user = $_POST['username'];
-    $pass = $_POST['password'];
+    $pass_ini = $_POST['password'];
+    $pass = passEnc($pass_ini);
 
     $sql = "SELECT * FROM users WHERE username='$user'";
     $result = mysqli_query($conn, $sql);
@@ -161,7 +171,7 @@ if(isset($_POST['submit'])){ // Check if form is submitted checking the buttons 
     <input id="go" type="submit" name="submit" value="Login">
 </form>
 <div class="dodo">
-    <pre style="font-family: Arial, sans-serif;">Don't have an account? </pre> <a href="lregistration_page.php">Register</a>
+    <pre style="font-family: Arial, sans-serif;">Don't have an account? </pre> <a href="registration_page.php">Register</a>
 </div>
 <div class="dodo">
     <pre id="success" style="color:rgb(0,195,0); font-size:25px;"></pre>

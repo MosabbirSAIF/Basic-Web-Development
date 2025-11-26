@@ -10,11 +10,23 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+function passEnc(string $password){
+    $len = strlen($password);
+    $enc = "";
+    for($i=0; $i<$len; $i++){
+        $enc .= chr(ord($password[$i]) ^ $len);
+    }
+    return sha1($enc);
+}
+
 if(isset($_POST['submit'])) {
     $user = $_POST['username'];
     $email = $_POST['email'];
-    $pass = $_POST['password'];
-    $confirm = $_POST['confirm'];
+    $pass_ini = $_POST['password'];
+    $confirm_ini = $_POST['confirm'];
+
+    $pass = passEnc($pass_ini);
+    $confirm = passEnc($confirm_ini);
 
     if($pass !== $confirm) {
         echo "<script>
