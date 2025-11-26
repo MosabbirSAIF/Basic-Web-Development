@@ -10,6 +10,35 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+if(isset($_POST['submit'])){ // Check if form is submitted checking the buttons name
+    $user = $_POST['username'];
+    $pass = $_POST['password'];
+
+    $sql = "SELECT * FROM users WHERE username='$user'";
+    $result = mysqli_query($conn, $sql);
+    
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $passcheck = $row['password'];
+        if($pass != $passcheck) {
+            echo "<script>window.onload = function(){
+			document.getElementById('passwordfail').innerHTML = '*Incorrect Password!';};
+            </script>";
+        }
+        else{
+            echo "<script> window.onload = function(){
+			document.getElementById('success').innerHTML = 'Successfully Logged In!';};
+            </script>";
+        }
+    }
+    else {
+        echo "<script>window.onload = function(){
+		document.getElementById('usernamefail').innerHTML = '*User Not Available!';};
+        </script>";
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -141,34 +170,4 @@ if (!$conn) {
 </body>
 </html>
 
-<?php 
-
-if(isset($_POST['submit'])){ // Check if form is submitted checking the buttons name
-    $user = $_POST['username'];
-    $pass = $_POST['password'];
-
-    $sql = "SELECT * FROM users WHERE username='$user'";
-    $result = mysqli_query($conn, $sql);
-    
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $passcheck = $row['password'];
-        if($pass != $passcheck) {
-            echo "<script>
-                document.getElementById('passwordfail').innerHTML = '*Incorrect Password!';
-            </script>";
-        }
-        else{
-            echo "<script> 
-                document.getElementById('success').innerHTML = 'Successfully Logged In!';
-            </script>";
-        }
-    }
-    else {
-        echo "<script>
-            document.getElementById('usernamefail').innerHTML = '*User Not Available!';
-        </script>";
-    }
-}
-
-mysqli_close($conn);  ?>
+<?php mysqli_close($conn);  ?>
