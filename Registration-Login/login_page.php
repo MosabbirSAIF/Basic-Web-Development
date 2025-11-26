@@ -10,33 +10,6 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-if(isset($_POST['submit'])){ // Check if form is submitted checking the buttons name
-    $user = $_POST['username'];
-    $pass = $_POST['password'];
-
-    $sql = "SELECT * FROM users WHERE username='$user'";
-    $result = mysqli_query($conn, $sql);
-    
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $passcheck = $row['password'];
-        if($pass != $passcheck) {
-            echo "<script> window.onload = function() {
-                document.getElementById('passwordfail').innerHTML = '*Incorrect Password!';
-            } </script>";
-        }
-        else{
-            echo "<script> window.onload = function() {
-                document.getElementById('success').innerHTML = 'Successfully Logged In!';
-            } </script>";
-        }
-    }
-    else {
-        echo "<script> window.onload = function() {
-            document.getElementById('usernamefail').innerHTML = '*User Not Available!';
-        } </script>";
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +42,7 @@ if(isset($_POST['submit'])){ // Check if form is submitted checking the buttons 
             margin-bottom: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
+			box-sizing: border-box;
         }
         input[type="submit"] {
             background-color: rgb(2,0,29);
@@ -158,7 +132,7 @@ if(isset($_POST['submit'])){ // Check if form is submitted checking the buttons 
     <input id="go" type="submit" name="submit" value="Login">
 </form>
 <div class="dodo">
-    <pre style="font-family: Arial, sans-serif;">Don't have an account? </pre> <a href="lab_practice15.php">Register</a>
+    <pre style="font-family: Arial, sans-serif;">Don't have an account? </pre> <a href="lregistration_page.php">Register</a>
 </div>
 <div class="dodo">
     <pre id="success" style="color:rgb(0,195,0); font-size:25px;"></pre>
@@ -167,4 +141,34 @@ if(isset($_POST['submit'])){ // Check if form is submitted checking the buttons 
 </body>
 </html>
 
-<?php mysqli_close($conn);  ?>
+<?php 
+
+if(isset($_POST['submit'])){ // Check if form is submitted checking the buttons name
+    $user = $_POST['username'];
+    $pass = $_POST['password'];
+
+    $sql = "SELECT * FROM users WHERE username='$user'";
+    $result = mysqli_query($conn, $sql);
+    
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $passcheck = $row['password'];
+        if($pass != $passcheck) {
+            echo "<script>
+                document.getElementById('passwordfail').innerHTML = '*Incorrect Password!';
+            </script>";
+        }
+        else{
+            echo "<script> 
+                document.getElementById('success').innerHTML = 'Successfully Logged In!';
+            </script>";
+        }
+    }
+    else {
+        echo "<script>
+            document.getElementById('usernamefail').innerHTML = '*User Not Available!';
+        </script>";
+    }
+}
+
+mysqli_close($conn);  ?>

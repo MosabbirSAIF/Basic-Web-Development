@@ -10,50 +10,6 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-if(isset($_POST['submit'])) {
-    $user = $_POST['username'];
-    $email = $_POST['email'];
-    $pass = $_POST['password'];
-    $confirm = $_POST['confirm'];
-
-    if($pass !== $confirm) {
-        echo "<script>window.onload = function() {
-            document.getElementById('confail').innerHTML = '*Password Not Matched!';
-        }</script>";
-    } 
-	else {
-        $sqlname = "SELECT * FROM users WHERE username = '$user'";
-        $sqlmail = "SELECT * FROM users WHERE email = '$email'";
-        $namechk = mysqli_query($conn, $sqlname);
-        $mailchk = mysqli_query($conn, $sqlmail);
-
-        if(!$namechk || !$mailchk) {
-            echo "<script>alert('Invalid Query!');</script>";
-        } 
-        else if(mysqli_num_rows($namechk) > 0) {
-            echo "<script>window.onload = function() {
-                document.getElementById('usernamefail').innerHTML = '*Username already in use';
-            }</script>";
-        }
-        else if(mysqli_num_rows($mailchk) > 0) {
-            echo "<script>window.onload = function() {
-                document.getElementById('emailfail').innerHTML = '*Email already in use';
-            }</script>";
-        }
-        else {
-            $sql = "INSERT INTO users (username, email, password) VALUES ('$user', '$email', '$pass')";
-            if(mysqli_query($conn, $sql)) {
-                echo "<script>window.onload = function() {
-                    document.getElementById('success').innerHTML = 'Successfully Registered!';
-                }</script>";
-            } 
-		    else {
-                echo "<script>alert('Insertion Error!');</script>";
-            }
-        }
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -86,6 +42,7 @@ if(isset($_POST['submit'])) {
             margin-bottom: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
+			box-sizing: border-box;
         }
         input[type="submit"] {
             background-color: rgb(2,0,29);
@@ -217,7 +174,7 @@ if(isset($_POST['submit'])) {
 </form>
 
 <div class="dodo">
-    <pre style="font-family: Arial, sans-serif;">Already have an account? </pre> <a href="lab_practice15_2.php">Login</a>
+    <pre style="font-family: Arial, sans-serif;">Already have an account? </pre> <a href="login_page.php">Login</a>
 </div>
 <div class="dodo">
     <pre id="success" style="color:rgb(0,195,0); font-size:25px;"></pre>
@@ -226,4 +183,49 @@ if(isset($_POST['submit'])) {
 </body>
 </html>
 
-<?php mysqli_close($conn); ?>
+<?php 
+if(isset($_POST['submit'])) {
+    $user = $_POST['username'];
+    $email = $_POST['email'];
+    $pass = $_POST['password'];
+    $confirm = $_POST['confirm'];
+
+    if($pass !== $confirm) {
+        echo "<script>
+        document.getElementById('confail').textContent = '*Password Not Matched!';
+        </script>";
+    } 
+	else {
+        $sqlname = "SELECT * FROM users WHERE username = '$user'";
+        $sqlmail = "SELECT * FROM users WHERE email = '$email'";
+        $namechk = mysqli_query($conn, $sqlname);
+        $mailchk = mysqli_query($conn, $sqlmail);
+
+        if(!$namechk || !$mailchk) {
+            echo "<script>alert('Invalid Query!');</script>";
+        } 
+        else if(mysqli_num_rows($namechk) > 0) {
+            echo "<script>
+                document.getElementById('usernamefail').innerHTML = '*Username already in use';
+            </script>";
+        }
+        else if(mysqli_num_rows($mailchk) > 0) {
+            echo "<script>
+                document.getElementById('emailfail').innerHTML = '*Email already in use';
+            </script>";
+        }
+        else {
+            $sql = "INSERT INTO users (username, email, password) VALUES ('$user', '$email', '$pass')";
+            if(mysqli_query($conn, $sql)) {
+                echo "<script>
+                    document.getElementById('success').innerHTML = 'Successfully Registered!';
+                </script>";
+            } 
+		    else {
+                echo "<script>alert('Insertion Error!');</script>";
+            }
+        }
+    }
+}
+
+mysqli_close($conn); ?>
